@@ -17,7 +17,7 @@ public class Department {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String departmentName;
-    //@Column(unique=true)
+    @Column(unique=true)
     private String payrollCode;
     @Enumerated(EnumType.STRING)
     private DepartmentStatus departmentStatus = DepartmentStatus.Ativo;

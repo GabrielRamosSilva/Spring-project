@@ -1,12 +1,10 @@
 package br.com.kyros.springproject.dto;
 
-import br.com.kyros.springproject.form.EmployeeForm;
 import br.com.kyros.springproject.model.Department;
 import br.com.kyros.springproject.model.Employee;
 import br.com.kyros.springproject.model.enums.EmployeeStatus;
 import br.com.kyros.springproject.model.enums.Gender;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +21,7 @@ public class EmployeeDto {
     private EmployeeStatus employeeStatus;
     private Gender gender;
     private Department department;
+    private Date dismissionDate;
 
     public EmployeeDto(Employee employee){
         this.id = employee.getId();
@@ -35,6 +34,7 @@ public class EmployeeDto {
         this.employeeStatus = employee.getEmployeeStatus();
         this.gender = employee.getGender();
         this.department = employee.getDepartment();
+        this.dismissionDate = employee.getDismissionDate();
     }
 
     public static List<EmployeeDto> convertToDto(List<Employee> employees){
@@ -79,5 +79,9 @@ public class EmployeeDto {
 
     public Department getDepartment() {
         return department;
+    }
+
+    public Date getDismissionDate() {
+        return dismissionDate;
     }
 }

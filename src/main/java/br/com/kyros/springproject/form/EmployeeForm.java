@@ -9,10 +9,8 @@ import br.com.kyros.springproject.respository.EmployeeRepository;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class EmployeeForm {
@@ -21,7 +19,7 @@ public class EmployeeForm {
     private String name;
     @NotNull @NotEmpty
     private String registrationNumber;
-    //@CPF
+    @CPF
     private String cpf;
     @NotNull @NotEmpty
     private String leaderNumber;
@@ -32,12 +30,12 @@ public class EmployeeForm {
     @NotNull @NotEmpty
     private String departmentName;
     private EmployeeStatus employeeStatus;
-
+    private Date dismissionDate;
 
     public Employee convertToEmployee(DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
         Department department = departmentRepository.findByDepartmentName(departmentName);
         Employee leader = employeeRepository.findLeaderByRegistrationNumber(leaderNumber);
-        return new Employee(name, registrationNumber, cpf, leader, admissionDate, salary, gender, department, employeeStatus);
+        return new Employee(name, registrationNumber, cpf, leader, admissionDate, salary, gender, department, employeeStatus, dismissionDate);
     }
 
     public Employee update(Long id, EmployeeRepository employeeRepository, DepartmentRepository departmentRepository){
@@ -50,7 +48,8 @@ public class EmployeeForm {
         employee.setSalary(this.salary);
         employee.setGender(this.gender);
         employee.setDepartment(departmentRepository.findByDepartmentName(this.departmentName));
-        employee.setEmployeeStatus(this.employeeStatus);
+        //employee.setEmployeeStatus(this.employeeStatus);
+        employee.dismissEmployee(this.dismissionDate);
         return employee;
     }
 
@@ -124,5 +123,14 @@ public class EmployeeForm {
 
     public void setEmployeeStatus(EmployeeStatus employeeStatus) {
         this.employeeStatus = employeeStatus;
+    }
+
+    public Date getDismissionDate() {
+        return dismissionDate;
+    }
+
+    public void setDismissionDate(Date dismissionDate) {
+        this.dismissionDate = dismissionDate;
+
     }
 }

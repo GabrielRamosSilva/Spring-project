@@ -2,7 +2,6 @@ package br.com.kyros.springproject.model;
 
 import br.com.kyros.springproject.model.enums.EmployeeStatus;
 import br.com.kyros.springproject.model.enums.Gender;
-import br.com.kyros.springproject.respository.EmployeeRepository;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -22,9 +20,9 @@ public class Employee {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    //@Column(unique=true)
+    @Column(unique=true)
     private String registrationNumber;
-    //@Column(unique=true)
+    @Column(unique=true)
     private String cpf;
     @ManyToOne
     private Employee leader;
@@ -36,10 +34,11 @@ public class Employee {
     private Gender gender;
     @ManyToOne
     private Department department;
+    private Date dismissionDate;
 
     public Employee() { }
 
-    public Employee(String name, String registrationNumber, String cpf, Employee leader, Date admissionDate, int salary, Gender gender, Department department, EmployeeStatus employeeStatus) {
+    public Employee(String name, String registrationNumber, String cpf, Employee leader, Date admissionDate, int salary, Gender gender, Department department, EmployeeStatus employeeStatus, Date dismissionDate) {
         this.name = name;
         this.registrationNumber = registrationNumber;
         this.cpf = cpf;
@@ -49,6 +48,14 @@ public class Employee {
         this.gender = gender;
         this.department = department;
         this.employeeStatus = employeeStatus;
+        this.dismissionDate = dismissionDate;
+    }
+
+    public void dismissEmployee(Date dismissionDate) {
+        if (dismissionDate != null) {
+            this.dismissionDate = dismissionDate;
+            this.employeeStatus = EmployeeStatus.Desligado;
+        }
     }
 
     public Long getId() {
@@ -111,7 +118,7 @@ public class Employee {
         return employeeStatus;
     }
 
-    public void setEmployeeStatus(EmployeeStatus employeeStatus) {
+    private void setEmployeeStatus(EmployeeStatus employeeStatus) {
         this.employeeStatus = employeeStatus;
     }
 
@@ -131,16 +138,24 @@ public class Employee {
         this.department = department;
     }
 
+    public Date getDismissionDate() {
+        return dismissionDate;
+    }
+
+    private void setDismissionDate(Date dismissionDate) {
+        this.dismissionDate = dismissionDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return salary == employee.salary && Objects.equals(id, employee.id) && Objects.equals(name, employee.name) && Objects.equals(registrationNumber, employee.registrationNumber) && Objects.equals(cpf, employee.cpf) && Objects.equals(leader, employee.leader) && Objects.equals(admissionDate, employee.admissionDate) && employeeStatus == employee.employeeStatus && gender == employee.gender && Objects.equals(department, employee.department);
+        return salary == employee.salary && Objects.equals(id, employee.id) && Objects.equals(name, employee.name) && Objects.equals(registrationNumber, employee.registrationNumber) && Objects.equals(cpf, employee.cpf) && Objects.equals(leader, employee.leader) && Objects.equals(admissionDate, employee.admissionDate) && employeeStatus == employee.employeeStatus && gender == employee.gender && Objects.equals(department, employee.department) && Objects.equals(dismissionDate, employee.dismissionDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, registrationNumber, cpf, leader, admissionDate, salary, employeeStatus, gender, department);
+        return Objects.hash(id, name, registrationNumber, cpf, leader, admissionDate, salary, employeeStatus, gender, department, dismissionDate);
     }
 }
