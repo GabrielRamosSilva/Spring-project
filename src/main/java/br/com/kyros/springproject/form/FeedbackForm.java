@@ -7,6 +7,7 @@ import br.com.kyros.springproject.model.enums.FeedbackType;
 import br.com.kyros.springproject.respository.EmployeeRepository;
 import br.com.kyros.springproject.respository.FeedbackRepository;
 import br.com.kyros.springproject.respository.SkillRepository;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 public class FeedbackForm {
 
+    @DateTimeFormat
     private LocalDate ocurrenceDate;
     private FeedbackType feedbackType;
     @NotNull @NotEmpty

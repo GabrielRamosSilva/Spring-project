@@ -2,6 +2,7 @@ package br.com.kyros.springproject.model;
 
 import br.com.kyros.springproject.model.enums.DepartmentStatus;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,6 +17,7 @@ public class Department {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String departmentName;
+    //@Column(unique=true)
     private String payrollCode;
     @Enumerated(EnumType.STRING)
     private DepartmentStatus departmentStatus = DepartmentStatus.Ativo;

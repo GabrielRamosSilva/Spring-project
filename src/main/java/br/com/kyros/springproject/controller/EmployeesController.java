@@ -3,6 +3,7 @@ package br.com.kyros.springproject.controller;
 import br.com.kyros.springproject.dto.EmployeeDto;
 import br.com.kyros.springproject.form.EmployeeForm;
 import br.com.kyros.springproject.model.Employee;
+import br.com.kyros.springproject.model.enums.EmployeeStatus;
 import br.com.kyros.springproject.respository.DepartmentRepository;
 import br.com.kyros.springproject.respository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,21 +43,6 @@ public class EmployeesController {
         return EmployeeDto.convertToDto(employees);
     }
 
-    @GetMapping("/byDepartment")
-    public List<EmployeeDto> employeesByDepartment(@RequestParam String department){
-        List<Employee> employees = employeeRepository.findEmployeeDepartmentByDepartmentDepartmentName(department);
-        return EmployeeDto.convertToDto(employees);
-    }
-
-    @PostMapping
-    @Transactional
-    public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody @Valid EmployeeForm employeeForm, UriComponentsBuilder uriBuilder){
-        Employee employee = employeeForm.convertToEmployee(departmentRepository);
-        employeeRepository.save(employee);
-        URI uri = uriBuilder.path("/employees/{id}").buildAndExpand(employee.getId()).toUri();
-        return ResponseEntity.created(uri).body(new EmployeeDto(employee));
-    }
-
     @GetMapping("/{id}")
     @Transactional
     public ResponseEntity<EmployeeDto> getEmployeeByRegisterNumber(@PathVariable String registrationNumber){
@@ -63,6 +51,45 @@ public class EmployeesController {
             return ResponseEntity.ok(new EmployeeDto(employee.get()));
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/byDepartment")
+    public List<EmployeeDto> employeesByDepartment(@RequestParam String department){
+        List<Employee> employees = employeeRepository.findByDepartmentDepartmentName(department);
+        return EmployeeDto.convertToDto(employees);
+    }
+
+    @GetMapping("/byName")
+    public List<EmployeeDto> employeeByName(@RequestParam String name){
+        List<Employee> employees = employeeRepository.findByName(name);
+        return EmployeeDto.convertToDto(employees);
+    }
+
+    @GetMapping("/byAdmissionDate")
+    public List<EmployeeDto> employeesByAdmissionDate(@RequestParam Date admissionDate){
+        List<Employee> employees = employeeRepository.findByAdmissionDate(admissionDate);
+        return EmployeeDto.convertToDto(employees);
+    }
+
+    @GetMapping("/byEmployeeStatus")
+    public List<EmployeeDto> employeesByEmployeeStatus(@RequestParam EmployeeStatus employeeStatus){
+        List<Employee> employees = employeeRepository.findByEmployeeStatus(employeeStatus);
+        return EmployeeDto.convertToDto(employees);
+    }
+
+    @GetMapping("/byLeader")
+    public List<EmployeeDto> employeesByLeader(@RequestParam String leaderNumber){
+        List<Employee> employees = employeeRepository.findByEmployeeLeader(leaderNumber);
+        return EmployeeDto.convertToDto(employees);
+    }
+
+    @PostMapping
+    @Transactional
+    public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody @Valid EmployeeForm employeeForm, UriComponentsBuilder uriBuilder){
+        Employee employee = employeeForm.convertToEmployee(departmentRepository, employeeRepository);
+        employeeRepository.save(employee);
+        URI uri = uriBuilder.path("/employees/{id}").buildAndExpand(employee.getId()).toUri();
+        return ResponseEntity.created(uri).body(new EmployeeDto(employee));
     }
 
     @PutMapping("/{id}")

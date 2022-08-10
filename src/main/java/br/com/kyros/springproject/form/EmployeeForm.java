@@ -6,10 +6,14 @@ import br.com.kyros.springproject.model.enums.EmployeeStatus;
 import br.com.kyros.springproject.model.enums.Gender;
 import br.com.kyros.springproject.respository.DepartmentRepository;
 import br.com.kyros.springproject.respository.EmployeeRepository;
+import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class EmployeeForm {
 
@@ -17,11 +21,12 @@ public class EmployeeForm {
     private String name;
     @NotNull @NotEmpty
     private String registrationNumber;
-    @NotNull @NotEmpty
+    //@CPF
     private String cpf;
     @NotNull @NotEmpty
-    private String leader;
-    private LocalDate admissionDate;
+    private String leaderNumber;
+    @DateTimeFormat
+    private Date admissionDate;
     private int salary;
     private Gender gender;
     @NotNull @NotEmpty
@@ -29,8 +34,9 @@ public class EmployeeForm {
     private EmployeeStatus employeeStatus;
 
 
-    public Employee convertToEmployee(DepartmentRepository departmentRepository) {
+    public Employee convertToEmployee(DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
         Department department = departmentRepository.findByDepartmentName(departmentName);
+        Employee leader = employeeRepository.findLeaderByRegistrationNumber(leaderNumber);
         return new Employee(name, registrationNumber, cpf, leader, admissionDate, salary, gender, department, employeeStatus);
     }
 
@@ -39,7 +45,7 @@ public class EmployeeForm {
         employee.setName(this.name);
         employee.setRegistrationNumber(this.registrationNumber);
         employee.setCpf(this.cpf);
-        employee.setLeader(this.leader);
+        employee.setLeader(employeeRepository.findLeaderByRegistrationNumber(this.leaderNumber));
         employee.setAdmissionDate(this.admissionDate);
         employee.setSalary(this.salary);
         employee.setGender(this.gender);
@@ -72,19 +78,19 @@ public class EmployeeForm {
         this.cpf = cpf;
     }
 
-    public String getLeader() {
-        return leader;
+    public String getLeaderNumber() {
+        return leaderNumber;
     }
 
-    public void setLeader(String leader) {
-        this.leader = leader;
+    public void setLeaderNumber(String leaderNumber) {
+        this.leaderNumber = leaderNumber;
     }
 
-    public LocalDate getAdmissionDate() {
+    public Date getAdmissionDate() {
         return admissionDate;
     }
 
-    public void setAdmissionDate(LocalDate admissionDate) {
+    public void setAdmissionDate(Date admissionDate) {
         this.admissionDate = admissionDate;
     }
 

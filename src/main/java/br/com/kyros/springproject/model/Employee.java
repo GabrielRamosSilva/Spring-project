@@ -2,7 +2,9 @@ package br.com.kyros.springproject.model;
 
 import br.com.kyros.springproject.model.enums.EmployeeStatus;
 import br.com.kyros.springproject.model.enums.Gender;
+import br.com.kyros.springproject.respository.EmployeeRepository;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -19,10 +22,13 @@ public class Employee {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    //@Column(unique=true)
     private String registrationNumber;
+    //@Column(unique=true)
     private String cpf;
-    private String leader;
-    private LocalDate admissionDate;
+    @ManyToOne
+    private Employee leader;
+    private Date admissionDate;
     private int salary;
     @Enumerated(EnumType.STRING)
     private EmployeeStatus employeeStatus = EmployeeStatus.Ativo;
@@ -33,7 +39,7 @@ public class Employee {
 
     public Employee() { }
 
-    public Employee(String name, String registrationNumber, String cpf, String leader, LocalDate admissionDate, int salary, Gender gender, Department department, EmployeeStatus employeeStatus) {
+    public Employee(String name, String registrationNumber, String cpf, Employee leader, Date admissionDate, int salary, Gender gender, Department department, EmployeeStatus employeeStatus) {
         this.name = name;
         this.registrationNumber = registrationNumber;
         this.cpf = cpf;
@@ -77,19 +83,19 @@ public class Employee {
         this.cpf = cpf;
     }
 
-    public String getLeader() {
+    public Employee getLeader() {
         return leader;
     }
 
-    public void setLeader(String leader) {
+    public void setLeader(Employee leader) {
         this.leader = leader;
     }
 
-    public LocalDate getAdmissionDate() {
+    public Date getAdmissionDate() {
         return admissionDate;
     }
 
-    public void setAdmissionDate(LocalDate admissionDate) {
+    public void setAdmissionDate(Date admissionDate) {
         this.admissionDate = admissionDate;
     }
 

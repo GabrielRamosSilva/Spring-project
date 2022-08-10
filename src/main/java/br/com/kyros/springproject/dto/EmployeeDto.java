@@ -7,6 +7,7 @@ import br.com.kyros.springproject.model.enums.EmployeeStatus;
 import br.com.kyros.springproject.model.enums.Gender;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,8 +17,8 @@ public class EmployeeDto {
     private String name;
     private String registrationNumber;
     private String cpf;
-    private String leader;
-    private LocalDate admissionDate;
+    private Employee leader;
+    private Date admissionDate;
     private int salary;
     private EmployeeStatus employeeStatus;
     private Gender gender;
@@ -56,11 +57,11 @@ public class EmployeeDto {
         return cpf;
     }
 
-    public String getLeader() {
+    public Employee getLeader() {
         return leader;
     }
 
-    public LocalDate getAdmissionDate() {
+    public Date getAdmissionDate() {
         return admissionDate;
     }
 
