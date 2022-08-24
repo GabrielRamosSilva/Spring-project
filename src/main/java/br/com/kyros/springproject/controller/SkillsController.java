@@ -4,7 +4,7 @@ import br.com.kyros.springproject.dto.SkillDto;
 import br.com.kyros.springproject.form.SkillForm;
 import br.com.kyros.springproject.model.Skill;
 import br.com.kyros.springproject.model.enums.SkillType;
-import br.com.kyros.springproject.respository.SkillRepository;
+import br.com.kyros.springproject.repository.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

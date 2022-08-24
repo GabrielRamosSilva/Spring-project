@@ -2,7 +2,7 @@ package br.com.kyros.springproject.form;
 
 import br.com.kyros.springproject.model.Skill;
 import br.com.kyros.springproject.model.enums.SkillType;
-import br.com.kyros.springproject.respository.SkillRepository;
+import br.com.kyros.springproject.repository.SkillRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

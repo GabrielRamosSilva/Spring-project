@@ -4,8 +4,8 @@ import br.com.kyros.springproject.model.Department;
 import br.com.kyros.springproject.model.Employee;
 import br.com.kyros.springproject.model.enums.EmployeeStatus;
 import br.com.kyros.springproject.model.enums.Gender;
-import br.com.kyros.springproject.respository.DepartmentRepository;
-import br.com.kyros.springproject.respository.EmployeeRepository;
+import br.com.kyros.springproject.repository.DepartmentRepository;
+import br.com.kyros.springproject.repository.EmployeeRepository;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 

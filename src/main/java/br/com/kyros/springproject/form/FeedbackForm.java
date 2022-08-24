@@ -4,9 +4,9 @@ import br.com.kyros.springproject.model.Employee;
 import br.com.kyros.springproject.model.Feedback;
 import br.com.kyros.springproject.model.Skill;
 import br.com.kyros.springproject.model.enums.FeedbackType;
-import br.com.kyros.springproject.respository.EmployeeRepository;
-import br.com.kyros.springproject.respository.FeedbackRepository;
-import br.com.kyros.springproject.respository.SkillRepository;
+import br.com.kyros.springproject.repository.EmployeeRepository;
+import br.com.kyros.springproject.repository.FeedbackRepository;
+import br.com.kyros.springproject.repository.SkillRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;

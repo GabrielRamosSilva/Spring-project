@@ -3,7 +3,7 @@ package br.com.kyros.springproject.controller;
 import br.com.kyros.springproject.dto.DepartmentDto;
 import br.com.kyros.springproject.form.DepartmentForm;
 import br.com.kyros.springproject.model.Department;
-import br.com.kyros.springproject.respository.DepartmentRepository;
+import br.com.kyros.springproject.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

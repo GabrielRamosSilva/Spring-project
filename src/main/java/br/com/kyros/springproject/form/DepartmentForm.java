@@ -2,7 +2,7 @@ package br.com.kyros.springproject.form;
 
 import br.com.kyros.springproject.model.Department;
 import br.com.kyros.springproject.model.enums.DepartmentStatus;
-import br.com.kyros.springproject.respository.DepartmentRepository;
+import br.com.kyros.springproject.repository.DepartmentRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

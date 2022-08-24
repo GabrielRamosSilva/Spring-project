@@ -1,4 +1,4 @@
-package br.com.kyros.springproject.respository;
+package br.com.kyros.springproject.repository;
 
 import br.com.kyros.springproject.model.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
