@@ -6,6 +6,10 @@ import br.com.kyros.springproject.model.Skill;
 import br.com.kyros.springproject.model.enums.SkillType;
 import br.com.kyros.springproject.repository.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,20 +36,20 @@ public class SkillsController {
     private SkillRepository skillRepository;
 
     @GetMapping("/")
-    public List<SkillDto> skillsList(){
-        List<Skill> skills = skillRepository.findByOrderBySkillNameAsc();
+    public Page<SkillDto> skillsList(@PageableDefault(page=0, size=10) Pageable pageable){
+        Page<Skill> skills = skillRepository.findByOrderBySkillNameAsc(pageable);
         return SkillDto.convertToDto(skills);
     }
 
     @GetMapping("/byName")
-    public List<SkillDto> skillsByName(@RequestParam String skillName){
-        List<Skill> skills = skillRepository.findByName(skillName);
+    public Page<SkillDto> skillsByName(@RequestParam String skillName, @PageableDefault(page=0, size=10) Pageable pageable){
+        Page<Skill> skills = skillRepository.findByName(skillName, pageable);
         return SkillDto.convertToDto(skills);
     }
 
     @GetMapping("/byType")
-    public List<SkillDto> skillsByType(@RequestParam SkillType skillType){
-        List<Skill> skills = skillRepository.findBySkillType(skillType);
+    public Page<SkillDto> skillsByType(@RequestParam SkillType skillType, @PageableDefault(page=0, size=10) Pageable pageable){
+        Page<Skill> skills = skillRepository.findBySkillType(skillType, pageable);
         return SkillDto.convertToDto(skills);
     }
 

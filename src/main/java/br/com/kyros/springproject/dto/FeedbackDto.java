@@ -4,6 +4,7 @@ import br.com.kyros.springproject.model.Employee;
 import br.com.kyros.springproject.model.Feedback;
 import br.com.kyros.springproject.model.Skill;
 import br.com.kyros.springproject.model.enums.FeedbackType;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,8 +32,8 @@ public class FeedbackDto {
         this.addressee = feedback.getAddressee();
     }
 
-    public static List<FeedbackDto> convertToDto(List<Feedback> feedbacks) {
-        return feedbacks.stream().map(FeedbackDto::new).collect(Collectors.toList());
+    public static Page<FeedbackDto> convertToDto(Page<Feedback> feedbacks) {
+        return feedbacks.map(FeedbackDto::new);
     }
 
     public Long getId() {

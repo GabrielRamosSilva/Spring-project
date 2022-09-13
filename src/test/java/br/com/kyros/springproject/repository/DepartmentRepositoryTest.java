@@ -22,7 +22,7 @@ class DepartmentRepositoryTest {
     private DepartmentRepository departmentRepository;
 
     @Test
-    void shouldFindDepartmentByDepartmentName() {
+    public void shouldFindDepartmentByDepartmentName() {
         String departmentName = "Department Test";
         Department testDepartment = new Department();
         testDepartment.setDepartmentName(departmentName);
@@ -36,8 +36,19 @@ class DepartmentRepositoryTest {
     }
 
     @Test
-    void shouldNotFindDepartmentIfDepartmentNameDoesNotExist() {
-        String departmentName = "Department Test";
+    public void test() {
+        Department department = new Department("Department", "10", DepartmentStatus.Ativo);
+        departmentRepository.save(department);
+        String departmentName = "Department";
+        Department findDepartment = departmentRepository.findByDepartmentName(departmentName);
+        Assertions.assertNotNull(department);
+        Assertions.assertEquals(departmentName, findDepartment.getDepartmentName());
+
+    }
+
+    @Test
+    public void shouldNotFindDepartmentIfDepartmentNameDoesNotExist() {
+        String departmentName = "Department";
         Department department = departmentRepository.findByDepartmentName(departmentName);
         Assertions.assertNull(department);
     }

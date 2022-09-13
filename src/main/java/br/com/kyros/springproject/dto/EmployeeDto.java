@@ -4,6 +4,7 @@ import br.com.kyros.springproject.model.Department;
 import br.com.kyros.springproject.model.Employee;
 import br.com.kyros.springproject.model.enums.EmployeeStatus;
 import br.com.kyros.springproject.model.enums.Gender;
+import org.springframework.data.domain.Page;
 
 import java.util.Date;
 import java.util.List;
@@ -37,8 +38,8 @@ public class EmployeeDto {
         this.dismissionDate = employee.getDismissionDate();
     }
 
-    public static List<EmployeeDto> convertToDto(List<Employee> employees){
-        return employees.stream().map(EmployeeDto::new).collect(Collectors.toList());
+    public static Page<EmployeeDto> convertToDto(Page<Employee> employees){
+        return employees.map(EmployeeDto::new);
     }
 
     public Long getId() {

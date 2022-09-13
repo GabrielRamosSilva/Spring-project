@@ -2,17 +2,18 @@ package br.com.kyros.springproject.repository;
 
 import br.com.kyros.springproject.model.Employee;
 import br.com.kyros.springproject.model.enums.EmployeeStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    List<Employee> findByRegistrationNumber(String registrationNumber);
+    Page<Employee> findByRegistrationNumber(String registrationNumber, Pageable pageable);
 
     @Query("SELECT e FROM Employee e WHERE e.registrationNumber = :registrationNumber")
     Optional<Employee> findOneEmployeeByRegistrationNumber(@Param("registrationNumber") String registrationNumber);
@@ -20,17 +21,17 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query("SELECT e FROM Employee e WHERE e.registrationNumber = :registrationNumber")
     Employee findLeaderByRegistrationNumber(@Param("registrationNumber") String registrationNumber);
 
-    List<Employee> findByOrderByNameAsc();
+    Page<Employee> findByOrderByNameAsc(Pageable pageable);
 
-    List<Employee> findByDepartmentDepartmentName(String departmentName);
+    Page<Employee> findByDepartmentDepartmentName(String departmentName, Pageable pageable);
 
-    List<Employee> findByName(String name);
+    Page<Employee> findByName(String name, Pageable pageable);
 
-    List<Employee> findByAdmissionDate(Date admissionDate);
+    Page<Employee> findByAdmissionDate(Date admissionDate, Pageable pageable);
 
     @Query("SELECT e FROM Employee e WHERE e.leader.registrationNumber = :registrationNumber")
-    List<Employee> findByEmployeeLeader(@Param("registrationNumber") String leaderNumber);
+    Page<Employee> findByEmployeeLeader(@Param("registrationNumber") String leaderNumber, Pageable pageable);
 
-    List<Employee> findByEmployeeStatus(EmployeeStatus employeeStatus);
+    Page<Employee> findByEmployeeStatus(EmployeeStatus employeeStatus, Pageable pageable);
 
 }

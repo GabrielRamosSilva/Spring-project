@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class EmployeeForm {
@@ -19,7 +20,7 @@ public class EmployeeForm {
     private String name;
     @NotNull @NotEmpty
     private String registrationNumber;
-    @CPF
+    //@CPF
     private String cpf;
     @NotNull @NotEmpty
     private String leaderNumber;
@@ -31,6 +32,18 @@ public class EmployeeForm {
     private String departmentName;
     private EmployeeStatus employeeStatus;
     private Date dismissionDate;
+
+    public EmployeeForm(String name, String registrationNumber, String cpf, String leaderNumber, Date admissionDate, int salary, Gender gender, String departmentName, EmployeeStatus employeeStatus) {
+        this.name = name;
+        this.registrationNumber = registrationNumber;
+        this.cpf = cpf;
+        this.leaderNumber = leaderNumber;
+        this.admissionDate = admissionDate;
+        this.salary = salary;
+        this.gender = gender;
+        this.departmentName = departmentName;
+        this.employeeStatus = employeeStatus;
+    }
 
     public Employee convertToEmployee(DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
         Department department = departmentRepository.findByDepartmentName(departmentName);

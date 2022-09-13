@@ -7,6 +7,9 @@ import br.com.kyros.springproject.repository.EmployeeRepository;
 import br.com.kyros.springproject.repository.FeedbackRepository;
 import br.com.kyros.springproject.repository.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +24,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/feedbacks")
@@ -38,14 +43,15 @@ public class FeedbacksController {
     private SkillRepository skillRepository;
 
     @GetMapping("/")
-    public List<FeedbackDto> feedbacksList() {
-        List<Feedback> feedbacks = feedbackRepository.findByOrderByRegistrationDateDesc();
+    public Page<FeedbackDto> feedbacksList(@PageableDefault(page=0, size=10) Pageable pageable) {
+        Page<Feedback> feedbacks = feedbackRepository.findByOrderByRegistrationDateDesc(pageable);
         return FeedbackDto.convertToDto(feedbacks);
     }
 
     @GetMapping("/byEmployee")
-    public List<FeedbackDto> feedbacksByEmployee(@RequestParam String adresseNumber) {
-        List<Feedback> feedbacks = feedbackRepository.findByAdresseeNumber(adresseNumber);
+    public Page<FeedbackDto> feedbacksByEmployee(@RequestParam String adresseNumber, @PageableDefault(page=0, size=10) Pageable pageable) {
+        LocalDate fromTheLastYear = LocalDate.now().minusYears(1);
+        Page<Feedback> feedbacks = feedbackRepository.findByAdresseeNumber(adresseNumber, fromTheLastYear, pageable);
         return FeedbackDto.convertToDto(feedbacks);
     }
 

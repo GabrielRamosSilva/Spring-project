@@ -2,6 +2,7 @@ package br.com.kyros.springproject.dto;
 
 import br.com.kyros.springproject.model.Skill;
 import br.com.kyros.springproject.model.enums.SkillType;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,8 +21,8 @@ public class SkillDto {
         this.skillType = skill.getSkillType();
     }
 
-    public static List<SkillDto> convertToDto(List<Skill> skills){
-        return skills.stream().map(SkillDto::new).collect(Collectors.toList());
+    public static Page<SkillDto> convertToDto(Page<Skill> skills){
+        return skills.map(SkillDto::new);
     }
 
     public Long getId() {

@@ -28,6 +28,15 @@ public class FeedbackForm {
     @NotNull @NotEmpty
     private String addresseeRegistrationNumber;
 
+    public FeedbackForm(LocalDate ocurrenceDate, FeedbackType feedbackType, String skillName, String description, String writerRegistrationNumber, String addresseeRegistrationNumber) {
+        this.ocurrenceDate = ocurrenceDate;
+        this.feedbackType = feedbackType;
+        this.skillName = skillName;
+        this.description = description;
+        this.writerRegistrationNumber = writerRegistrationNumber;
+        this.addresseeRegistrationNumber = addresseeRegistrationNumber;
+    }
+
     public Feedback convertToFeedback(EmployeeRepository employeeRepository, SkillRepository skillRepository) {
         Optional<Employee> writerEmployee = employeeRepository.findOneEmployeeByRegistrationNumber(writerRegistrationNumber);
         Optional<Employee> adresseeEmployee = employeeRepository.findOneEmployeeByRegistrationNumber(addresseeRegistrationNumber);

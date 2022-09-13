@@ -2,6 +2,8 @@ package br.com.kyros.springproject.repository;
 
 import br.com.kyros.springproject.model.Skill;
 import br.com.kyros.springproject.model.enums.SkillType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,10 +15,10 @@ public interface SkillRepository extends JpaRepository<Skill, Long> {
     Skill findBySkillName(String skillName);
 
     @Query("SELECT s FROM Skill s WHERE s.skillName = :skillName")
-    List<Skill> findByName (@Param("skillName") String skillName);
+    Page<Skill> findByName (@Param("skillName") String skillName, Pageable pageable);
 
-    List<Skill> findBySkillType (SkillType skillType);
+    Page<Skill> findBySkillType (SkillType skillType, Pageable pageable);
 
-    List<Skill> findByOrderBySkillNameAsc();
+    Page<Skill> findByOrderBySkillNameAsc(Pageable pageable);
 
 }

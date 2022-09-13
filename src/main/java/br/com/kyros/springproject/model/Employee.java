@@ -22,7 +22,7 @@ public class Employee {
     private String name;
     @Column(unique=true)
     private String registrationNumber;
-    @Column(unique=true)
+    //@Column(unique=true)
     private String cpf;
     @ManyToOne
     private Employee leader;

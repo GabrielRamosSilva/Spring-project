@@ -7,6 +7,9 @@ import br.com.kyros.springproject.model.enums.EmployeeStatus;
 import br.com.kyros.springproject.repository.DepartmentRepository;
 import br.com.kyros.springproject.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,8 +40,8 @@ public class EmployeesController {
     private DepartmentRepository departmentRepository;
 
     @GetMapping("/")
-    public List<EmployeeDto> employeesList(){
-        List<Employee> employees = employeeRepository.findByOrderByNameAsc();
+    public Page<EmployeeDto> employeesList(@PageableDefault(page=0, size=10) Pageable pageable){
+        Page<Employee> employees = employeeRepository.findByOrderByNameAsc(pageable);
         return EmployeeDto.convertToDto(employees);
     }
 
@@ -53,32 +56,32 @@ public class EmployeesController {
     }
 
     @GetMapping("/byDepartment")
-    public List<EmployeeDto> employeesByDepartment(@RequestParam String department){
-        List<Employee> employees = employeeRepository.findByDepartmentDepartmentName(department);
+    public Page<EmployeeDto> employeesByDepartment(@RequestParam String department, @PageableDefault(page=0, size=10) Pageable pageable){
+        Page<Employee> employees = employeeRepository.findByDepartmentDepartmentName(department, pageable);
         return EmployeeDto.convertToDto(employees);
     }
 
     @GetMapping("/byName")
-    public List<EmployeeDto> employeeByName(@RequestParam String name){
-        List<Employee> employees = employeeRepository.findByName(name);
+    public Page<EmployeeDto> employeeByName(@RequestParam String name, @PageableDefault(page=0, size=10) Pageable pageable){
+        Page<Employee> employees = employeeRepository.findByName(name, pageable);
         return EmployeeDto.convertToDto(employees);
     }
 
     @GetMapping("/byAdmissionDate")
-    public List<EmployeeDto> employeesByAdmissionDate(@RequestParam Date admissionDate){
-        List<Employee> employees = employeeRepository.findByAdmissionDate(admissionDate);
+    public Page<EmployeeDto> employeesByAdmissionDate(@RequestParam Date admissionDate, @PageableDefault(page=0, size=10) Pageable pageable){
+        Page<Employee> employees = employeeRepository.findByAdmissionDate(admissionDate, pageable);
         return EmployeeDto.convertToDto(employees);
     }
 
     @GetMapping("/byEmployeeStatus")
-    public List<EmployeeDto> employeesByEmployeeStatus(@RequestParam EmployeeStatus employeeStatus){
-        List<Employee> employees = employeeRepository.findByEmployeeStatus(employeeStatus);
+    public Page<EmployeeDto> employeesByEmployeeStatus(@RequestParam EmployeeStatus employeeStatus, @PageableDefault(page=0, size=10) Pageable pageable){
+        Page<Employee> employees = employeeRepository.findByEmployeeStatus(employeeStatus, pageable);
         return EmployeeDto.convertToDto(employees);
     }
 
     @GetMapping("/byLeader")
-    public List<EmployeeDto> employeesByLeader(@RequestParam String leaderNumber){
-        List<Employee> employees = employeeRepository.findByEmployeeLeader(leaderNumber);
+    public Page<EmployeeDto> employeesByLeader(@RequestParam String leaderNumber, @PageableDefault(page=0, size=10) Pageable pageable){
+        Page<Employee> employees = employeeRepository.findByEmployeeLeader(leaderNumber, pageable);
         return EmployeeDto.convertToDto(employees);
     }
 
